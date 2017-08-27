@@ -1,0 +1,16 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{E5721B90-4FE6-9BA3-BF92-16B482A0394F}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "Parteh",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
+		}
+	]
+}
