@@ -45,4 +45,5 @@ public:
 	FORCEINLINE void ResetJumpState() { Super::ResetJumpState(); }
 
 protected:
+	void HandleTileCollision(const FName & tileData);
 };

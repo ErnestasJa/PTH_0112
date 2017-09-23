@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CrappyFlapCharacter.h"
+#include "CrappyFlapTileUserData.h"
+#include "PartehGameInstance.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "PaperFlipbookComponent.h"
@@ -58,46 +60,44 @@ void ACrappyFlapCharacter::OnHit(UPrimitiveComponent* HitComponent, AActor* Othe
 
 	if (OtherComp->IsA(UPaperTileMapComponent::StaticClass())) {
 		auto tilemapComponent = (class UPaperTileMapComponent*)OtherComp;
+		auto layerCount = tilemapComponent->TileMap->TileLayers.Num();
 
 		auto hit = Hit.ImpactPoint;
 		auto hitNormal = Hit.Normal;
 		auto tilemapPos = OtherActor->GetActorLocation();
 		auto tileHitPos = (hit - hitNormal) - tilemapPos;
-		
+
 		int posX = FMath::Round(tileHitPos.X / tilemapComponent->TileMap->TileWidth);
 		int posY = FMath::Round(tileHitPos.Z / tilemapComponent->TileMap->TileHeight) *-1;
 
-		auto tile = tilemapComponent->GetTile(posX, posY, 0);
-		auto tileSet = tilemapComponent->TileMap->SelectedTileSet.Get();
-		auto userData = tileSet->GetTileUserData(tile.GetTileIndex());
+		for (int layer = 0; layer < layerCount; layer++)
+		{
+			auto tile = tilemapComponent->GetTile(posX, posY, layer);
+			auto tileSet = tilemapComponent->TileMap->SelectedTileSet.Get();
+			auto userData = tileSet->GetTileUserData(tile.GetTileIndex());
 
-		auto calculatedPos = tilemapPos 
-			+ FVector(tilemapComponent->TileMap->TileWidth * posX, 0, tilemapComponent->TileMap->TileHeight * (posY*-1));
-
-		DrawDebugLine(
-			GetWorld(),
-			calculatedPos,
-			calculatedPos - hitNormal,
-			FColor(255, 0, 0),
-			false,
-			5
-		);
-
-		DrawDebugLine(
-			GetWorld(),
-			hit,
-			hit - (hitNormal*10.0f),
-			FColor(255, 0, 0),
-			false,
-			5
-		);
-
-		if (userData != NAME_None) {
-			auto userDataString = userData.ToString();
-
-			if (userData != "floor") {
-				GetWorld()->ServerTravel(FString("/Game/Scoreboard/ScoreboardLevel"));
-			}
+			HandleTileCollision(userData);
 		}
+	}
+}
+
+void ACrappyFlapCharacter::HandleTileCollision(const FName & tileData) {
+	if (tileData == NAME_None)
+		return;
+
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, tileData.ToString());
+
+	if (tileData == CrappyFlapTileUserData::Floor) {
+		return;
+	}
+	if (tileData == CrappyFlapTileUserData::Win) {
+		auto partehGameInstance = static_cast<UPartehGameInstance*>(GetWorld()->GetGameInstance());
+		partehGameInstance->LevelOutcome = ELevelOutcomeEnum::LO_Win;
+		GetWorld()->ServerTravel(FString("/Game/Scoreboard/ScoreboardLevel"));
+	}
+	else {
+		auto partehGameInstance = static_cast<UPartehGameInstance*>(GetWorld()->GetGameInstance());
+		partehGameInstance->LevelOutcome = ELevelOutcomeEnum::LO_Lose;
+		GetWorld()->ServerTravel(FString("/Game/Scoreboard/ScoreboardLevel"));
 	}
 }
