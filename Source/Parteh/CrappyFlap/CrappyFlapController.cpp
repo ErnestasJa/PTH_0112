@@ -15,15 +15,11 @@ void ACrappyFlapController::SetupInputComponent()
 
 	this->InputComponent->BindAction("Flap", EInputEvent::IE_Pressed, this, &ACrappyFlapController::OnFlapStart);
 	this->InputComponent->BindAction("Flap", EInputEvent::IE_Released, this, &ACrappyFlapController::OnFlapEnd);
-
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Trying to flap"));
 }
 
 
 void ACrappyFlapController::OnFlapStart()
 {
-	if (GEngine)
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Flap"));
 	ACrappyFlapCharacter* character = Cast<ACrappyFlapCharacter>(this->GetCharacter());
 	if (character)
 	{

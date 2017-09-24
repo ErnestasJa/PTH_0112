@@ -85,8 +85,6 @@ void ACrappyFlapCharacter::HandleTileCollision(const FName & tileData) {
 	if (tileData == NAME_None)
 		return;
 
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, tileData.ToString());
-
 	if (tileData == CrappyFlapTileUserData::Floor) {
 		return;
 	}
