@@ -9,10 +9,6 @@ void ACrappyFlapController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
-	this->PlayerInputComponent = this->InputComponent;
-
-	this->PlayerInputComponent->Activate();
-
 	this->InputComponent->BindAction("Flap", EInputEvent::IE_Pressed, this, &ACrappyFlapController::OnFlapStart);
 	this->InputComponent->BindAction("Flap", EInputEvent::IE_Released, this, &ACrappyFlapController::OnFlapEnd);
 }

@@ -10,12 +10,7 @@
 ACrappyFlapGameMode::ACrappyFlapGameMode(const FObjectInitializer& ObjectInitializer) :
 	Super(ObjectInitializer.DoNotCreateDefaultSubobject(TEXT("Sprite")))
 {
-	static ConstructorHelpers::FObjectFinder<UBlueprint> Blueprint(TEXT("Blueprint'/Game/CrappyFlap/Player/CrappyFlapCharacterBP.CrappyFlapCharacterBP'"));
-	if (Blueprint.Object) {
-		DefaultPawnClass = (UClass*)Blueprint.Object->GeneratedClass;
-	}
 
-	PlayerControllerClass = ACrappyFlapController::StaticClass();
 }
 
 

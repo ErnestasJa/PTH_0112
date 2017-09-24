@@ -44,11 +44,16 @@ void ACrappyFlapCharacter::PostInitializeComponents() {
 	auto comp = this->GetCharacterMovement();
 }
 
+
 void ACrappyFlapCharacter::Tick(float deltaSeconds) {
 	Super::Tick(deltaSeconds);
 
-	this->AddMovementInput(FVector(Speed * deltaSeconds, 0, 0));
+	if (this->InputEnabled() && this->IsMoveInputIgnored() == false)
+	{
+		this->AddMovementInput(FVector(Speed * deltaSeconds, 0, 0));
+	}
 }
+
 #include "DrawDebugHelpers.h"
 void ACrappyFlapCharacter::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)

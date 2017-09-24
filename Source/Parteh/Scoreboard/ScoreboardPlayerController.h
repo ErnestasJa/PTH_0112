@@ -15,17 +15,8 @@ class PARTEH_API AScoreboardPlayerController : public APlayerController
 	GENERATED_BODY()
 
 public:
-
-	// Override BeginPlay()
-	virtual void BeginPlay() override;
 	
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
-	TSubclassOf<class UUserWidget> wMainMenu;
-
-
 protected:
-	// Variable to hold the widget After Creating it.
-	UUserWidget* MyMainMenu;
 	
 };

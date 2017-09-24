@@ -19,7 +19,4 @@ public:
 	void SetupInputComponent() override;
 	void OnFlapStart();
 	void OnFlapEnd();
-
-	UPROPERTY()
-	class UInputComponent* PlayerInputComponent;
 };
