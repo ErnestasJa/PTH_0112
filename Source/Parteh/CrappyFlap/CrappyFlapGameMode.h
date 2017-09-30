@@ -13,9 +13,16 @@ UCLASS(config = Game, notplaceable, BlueprintType, Blueprintable, Transient, hid
 class PARTEH_API ACrappyFlapGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+
+public:
+	UPROPERTY(Category = Game, EditAnywhere, BlueprintReadWrite)
+	int TimeUntilStart;
+
 public:
 	ACrappyFlapGameMode(const FObjectInitializer& ObjectInitializer);
 	
-	
+	virtual void BeginPlay() override;
+
+public:
+	void GameStartTimer();
 };

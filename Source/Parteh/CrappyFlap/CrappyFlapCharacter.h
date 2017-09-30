@@ -20,11 +20,9 @@ public:
 	static FName SpriteComponentName;
 
 private:
-	/** The main skeletal mesh associated with this Character (optional sub-object). */
 	UPROPERTY(Category = Character, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UPaperFlipbookComponent* Sprite;
 
-	/** The main skeletal mesh associated with this Character (optional sub-object). */
 	UPROPERTY(Category = Character, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	float Speed;
 

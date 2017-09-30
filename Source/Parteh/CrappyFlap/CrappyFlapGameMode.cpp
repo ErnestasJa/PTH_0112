@@ -8,9 +8,22 @@
 #include "EngineUtils.h"
 
 ACrappyFlapGameMode::ACrappyFlapGameMode(const FObjectInitializer& ObjectInitializer) :
-	Super(ObjectInitializer.DoNotCreateDefaultSubobject(TEXT("Sprite")))
+	Super(ObjectInitializer.DoNotCreateDefaultSubobject(TEXT("Sprite"))),
+	TimeUntilStart(3)
 {
-
 }
 
+void ACrappyFlapGameMode::BeginPlay() {
+	Super::BeginPlay();
 
+	FTimerHandle unusedHandle;
+	GetWorldTimerManager().SetTimer(unusedHandle, this, &ACrappyFlapGameMode::GameStartTimer, 3, false);
+}
+
+void ACrappyFlapGameMode::GameStartTimer() {
+	if (TimeUntilStart > 0) {
+		TimeUntilStart -= 1;
+		FTimerHandle unusedHandle;
+		GetWorldTimerManager().SetTimer(unusedHandle, this, &ACrappyFlapGameMode::GameStartTimer, 1, false);
+	}
+}
