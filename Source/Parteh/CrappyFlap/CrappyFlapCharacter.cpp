@@ -50,7 +50,7 @@ void ACrappyFlapCharacter::Tick(float deltaSeconds) {
 
 	if (this->InputEnabled() && this->IsMoveInputIgnored() == false)
 	{
-		this->AddMovementInput(FVector(Speed * deltaSeconds, 0, 0));
+		this->AddMovementInput(FVector(Speed, 0, 0));
 	}
 }
 
